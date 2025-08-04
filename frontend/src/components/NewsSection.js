@@ -17,7 +17,7 @@ const NewsSection = ({ category }) => {
   const fetchNews = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/api/news/${category}`);
+      const response = await fetch(`/api/news/${category}`);
       const data = await response.json();
       setNews(data.news || []);
     } catch (error) {
@@ -30,7 +30,7 @@ const NewsSection = ({ category }) => {
   const fetchRecommendations = async () => {
     try {
       setLoadingRec(true);
-      const response = await fetch('http://localhost:5000/api/insurance-recommendations');
+      const response = await fetch('/api/insurance-recommendations');
       const data = await response.json();
       setRecommendations(data.recommendations || '');
     } catch (error) {

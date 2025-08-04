@@ -501,5 +501,8 @@ def get_comprehensive_analysis():
     
     return jsonify(analysis)
 
+# Vercel serverless function handler
+app.config['DEBUG'] = False
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
