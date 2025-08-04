@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Paper, Typography, Grid, Card, CardContent, Box, CircularProgress, Chip } from '@mui/material';
-import { Line } from 'react-chartjs-2';
 
 const InsuranceClaimsDetail = () => {
   const [claimsData, setClaimsData] = useState(null);
