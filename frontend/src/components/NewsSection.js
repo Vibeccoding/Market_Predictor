@@ -12,7 +12,7 @@ const NewsSection = ({ category }) => {
     if (category === 'insurance') {
       fetchRecommendations();
     }
-  }, [category]);
+  }, [category]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const fetchNews = async () => {
     try {
