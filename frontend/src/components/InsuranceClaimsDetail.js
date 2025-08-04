@@ -1,25 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Paper, Typography, Grid, Card, CardContent, Box, CircularProgress, Chip } from '@mui/material';
 
 const InsuranceClaimsDetail = () => {
-  const [claimsData, setClaimsData] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchClaimsData();
-  }, []);
-
-  const fetchClaimsData = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/insurance-claims');
-      const data = await response.json();
-      setClaimsData(data.claims_details);
-    } catch (error) {
-      console.error('Error fetching claims data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [loading] = useState(false);
 
   const recommendations = [
     {
