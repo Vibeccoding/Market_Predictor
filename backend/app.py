@@ -1,76 +1,21 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import openai
-import requests
 import json
 from datetime import datetime
 import os
-import ssl
-import urllib3
-
-# Disable SSL warnings and verification
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-ssl._create_default_https_context = ssl._create_unverified_context
 
 app = Flask(__name__)
 CORS(app)
 
-# Configure OpenAI
-openai.api_key = os.getenv('OPENAI_API_KEY', 'your-openai-api-key')
-
-# Mock OpenAI responses for demo purposes
-USE_MOCK_OPENAI = True
+# Use mock data for all responses
+USE_MOCK_DATA = True
 
 class MarketPredictor:
     def __init__(self):
         self.categories = ['insurance', 'loan_claims', 'preclosure']
     
     def get_market_data_from_ai(self, category):
-        if USE_MOCK_OPENAI:
-            return self.get_mock_market_data(category)
-            
-        prompts = {
-            'insurance': """Provide current insurance market analysis including:
-            1. Market size and growth rate
-            2. Top insurance companies performance
-            3. Premium trends and pricing
-            4. Claims ratio and frequency
-            5. Regulatory changes impact
-            6. Technology adoption in insurance
-            7. Risk assessment trends
-            Format as JSON with specific metrics.""",
-            
-            'loan_claims': """Provide current loan claims market analysis including:
-            1. Default rates by loan type
-            2. Recovery rates and timelines
-            3. Economic factors affecting loans
-            4. Digital lending impact
-            5. Credit score trends
-            6. Interest rate effects
-            7. Regulatory compliance updates
-            Format as JSON with specific metrics.""",
-            
-            'preclosure': """Provide current preclosure market analysis including:
-            1. Preclosure activity rates
-            2. Geographic hotspots
-            3. Property value impacts
-            4. Refinancing trends
-            5. Interest rate correlations
-            6. Economic indicators
-            7. Market predictions
-            Format as JSON with specific metrics."""
-        }
-        
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompts[category]}],
-                max_tokens=800,
-                request_timeout=30
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            return self.get_mock_market_data(category)
+        return self.get_mock_market_data(category)
     
     def get_mock_market_data(self, category):
         mock_data = {
@@ -107,30 +52,7 @@ class MarketPredictor:
         return mock_data.get(category, "Market data unavailable")
     
     def get_insurance_claims_details(self):
-        if USE_MOCK_OPENAI:
-            return self.get_mock_claims_data()
-            
-        prompt = """Provide detailed insurance claims analysis including:
-        1. Claims volume by insurance type (auto, health, property, life)
-        2. Average claim amounts and processing times
-        3. Fraud detection rates and patterns
-        4. Settlement ratios and dispute rates
-        5. Geographic claim distribution
-        6. Seasonal trends in claims
-        7. Technology impact on claims processing
-        8. Predictive analytics for claims
-        Format as detailed JSON with specific numbers and percentages."""
-        
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=1000,
-                request_timeout=30
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            return self.get_mock_claims_data()
+        return self.get_mock_claims_data()
     
     def get_mock_claims_data(self):
         return """📊 CLAIMS VOLUME BY TYPE:
@@ -183,32 +105,7 @@ class MarketPredictor:
 • Claims Frequency Modeling: 91.2% precision"""
     
     def get_market_prediction(self, category, data):
-        if USE_MOCK_OPENAI:
-            return self.get_mock_prediction(category, data)
-            
-        prompt = f"""
-        Analyze the following {category} market data and provide predictions:
-        Data: {data}
-        
-        Please provide:
-        1. Market trend analysis
-        2. Risk assessment
-        3. 30-day prediction
-        4. Key factors affecting the market
-        5. Investment recommendations
-        6. Potential challenges
-        """
-        
-        try:
-            response = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=600,
-                request_timeout=30
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            return self.get_mock_prediction(category, data)
+        return self.get_mock_prediction(category, data)
     
     def get_mock_prediction(self, category, data):
         predictions = {
